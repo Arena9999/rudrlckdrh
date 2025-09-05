@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <style>
+        body {
+            height: 100%;
+            margin: 12%;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #d299c2, #fef9d7, #b06ab3);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+
+        @keyframes gradientBG {
+            0% {background-position: 0% 50%;}
+            50% {background-position: 100% 50%;}
+            100% {background-position: 0% 50%;}
+        }
+
+        .login-box {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 50px;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            text-align: center;
+            width: 300px;
+        }
+
+        .login-box img {
+            width: 70px;
+            height: 70px;
+            margin-bottom: 20px;
+        }
+
+        .login-box input[type="text"],
+        .login-box input[type="password"] {
+            width: 270px;
+            padding: 12px 15px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.3);
+            color: #ffffff;
+            font-size: 14px;
+            text-align: left;
+        }
+
+        .login-box input::placeholder {
+            color: brown;
+        }
+
+        /* Forgot Password를 오른쪽 정렬 */
+        .options {
+            width: 100%;           /* 패스워드 입력창 너비 기준 */
+            text-align: right;     /* 오른쪽 끝으로 정렬 */
+            font-size: 12px;
+            margin-bottom: 16px;
+        }
+
+        .options a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .login-box button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background-color: rgba(255, 255, 255, 0.4);
+            color: #d7ff70;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .login-box button:hover {
+            background-color: rgba(255, 255, 255, 0.6);
+        }
+    </style>
+</head>
+<body>
+    <div class="login-box">
+        <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="User Icon">
+        <form method="post">
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <div class="options">
+                <a href="#">Forgot Password?</a>
+            </div>
+            <button type="submit">LOGIN</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,8 +1,12 @@
-from flask import Flask, render_template, Blueprint, session, request, jsonify
+from flask import Flask, flash, redirect, render_template, Blueprint, session, request, jsonify, url_for
 import sqlite3
+
+from db import database
 
 app = Flask(__name__)
 app.secret_key = "your secret_key"
+
+database.init_db()
 
 def get_db_connection():
     conn = sqlite3.connect('database.db')
@@ -10,17 +14,50 @@ def get_db_connection():
     return conn
 
 
-@app.route("/")
-def hello():
-    return "hello world"
+@app.route("/", strict_slashes=False)
+def home():
+    if "user_id" in session:
+        return f"안녕하세요, {session['user_id']}님! <a href='/logout'>로그아웃</a>"
+    return "hello world <br><a href='/login'>로그인</a> <br><a href='/register'>회원가입</a>"
 
-@app.route("/templates/login")
+
+@app.route("/login", methods=["GET", "POST"])
 def login():
-    return 0
+    if request.method == "POST":
+        username = request.form["username"]
+        password = request.form["password"]
+        
+        if not username or not password:
+            flash("아이디와 비밀번호를 입력해주세요.")
+            return redirect(url_for("login"))
 
+        user = database.check_user_login(username, password)
+        if user:
+            session["user_id"] = username
+            database.log_login(user["id"], request.remote_addr)
+            return redirect(url_for("home"))
+        else:
+            flash("아이디 또는 비밀번호가 잘못되었습니다.")
+            return redirect(url_for("login"))
+    return render_template("login.html")
+
+@app.route("/logout")
+def logout():
+    session.pop("user_id", None)
+    return redirect(url_for("home"))
+
+@app.route("/register", methods=["GET", "POST"])
+def register():
+    if request.method == "POST":
+        username = request.form["username"]
+        password = request.form["password"]
+        if database.add_user(username, password):
+            flash("회원가입 완료! 로그인 해주세요.")
+            return redirect(url_for("login"))
+        else:
+            flash("이미 존재하는 사용자입니다.")
+            return redirect(url_for("register"))
+    return render_template("register.html")
 
 if __name__ == "__main__":
-    app.run()
-
-
-
+    app.run(debug=True)
