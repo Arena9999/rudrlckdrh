@@ -1,9 +1,10 @@
 from flask import Flask, flash, redirect, render_template, Blueprint, session, request, jsonify, url_for
-import sqlite3
+import sqlite3, cv2
 
 from db import database
 
 app = Flask(__name__)
+cap = cv2.VideoCapture(0)
 app.secret_key = "your secret_key"
 
 database.init_db()
@@ -17,7 +18,7 @@ def get_db_connection():
 @app.route("/", strict_slashes=False)
 def home():
     if "user_id" in session:
-        return f"안녕하세요, {session['user_id']}님! <a href='/logout'>로그아웃</a>"
+        return f"안녕하세요, {session['user_id']}님! <a href='/logout'>로그아웃</a> <a href='/com'>캠</a>"
     return "hello world <br><a href='/login'>로그인</a> <br><a href='/register'>회원가입</a>"
 
 
@@ -58,6 +59,31 @@ def register():
             flash("이미 존재하는 사용자입니다.")
             return redirect(url_for("register"))
     return render_template("register.html")
+
+@app.route("/com")
+def com():
+
+    return render_template("com.html")
+
+
+
+def gen_frames():
+    while True:
+        success, frame = cap.read()
+        if not success:
+            break
+        else:
+            ret, buffer = cv2.imencode('.jpg', frame)
+            frame = buffer.tobytes()
+            yield (b'--frame\r\n'
+                   b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+
+@app.route('/video_feed')
+def video_feed():
+    return Response(gen_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
+
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)
