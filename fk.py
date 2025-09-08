@@ -18,7 +18,7 @@ def get_db_connection():
 @app.route("/", strict_slashes=False)
 def home():
     if "user_id" in session:
-        return f"안녕하세요, {session['user_id']}님! <a href='/logout'>로그아웃</a> <a href='/com'>캠</a> <a>"
+        return f"안녕하세요, {session['user_id']}님! <a href='/logout'>로그아웃</a> <a href='/com'>캠</a> <a href='//video_feed'>com</a>"
     return "hello world <br><a href='/login'>로그인</a> <br><a href='/register'>회원가입</a>"
 
 
