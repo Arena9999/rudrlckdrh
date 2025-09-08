@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}웹 서비스{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <!-- 헤더 -->
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <a href="{{ url_for('index') }}">
+                    <img src="{{ url_for('static', filename='logo.png') }}" alt="logo" height="30">
+                </a>
+            </div>
+            <div class="menu">
+                <a href="/signup">회원가입</a>
+                <a href="/login">로그인</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- 메인 컨텐츠 -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- 푸터 -->
+    <footer>
+        <div class="footer-links">
+            <a href="#">피드백/버그 제보</a> |
+            <a href="#">FAQ</a> |
+            <a href="#">보안 안내</a> |
+            <a href="#">약관 및 개인정보 처리방침</a>
+        </div>
+        <p>© 2025 웹 서비스 플랫폼. All rights reserved.</p>
+    </footer>
+
+    <!-- JS -->
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
