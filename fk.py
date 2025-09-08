@@ -1,4 +1,4 @@
-from flask import Flask, flash, redirect, render_template, Blueprint, session, request, jsonify, url_for
+from flask import Flask, flash, redirect, render_template, Blueprint, session, request, jsonify, url_for, Response
 import sqlite3, cv2
 
 from db import database
