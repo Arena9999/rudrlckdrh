@@ -1,14 +1,14 @@
 from flask import Blueprint, render_template, request, url_for, flash, redirect, session
-from db.domains.users.account import database
+from db import database
 
-signup_bp = Blueprint('signup', __name__,)
+signup_bp = Blueprint('signup', __name__)
 
 @signup_bp.route("/signup", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
-        username = request.form.get("username", "").strip()
-        password = request.form.get("password", "")
-        password_confirm = request.form.get("password_confirm", "")
+        username = request.form["username"].strip()
+        password = request.form["password"]
+        password_confirm = request.form["password_confirm"]
 
         if not username or not password:
             flash("아이디와 비밀번호를 입력해주세요.")
@@ -24,4 +24,14 @@ def register():
         else:
             flash("이미 존재하는 사용자입니다.")
             return redirect(url_for("signup.register"))
+
     return render_template("signup/signup.html")
+
+
+# 게스트 로그인
+@signup_bp.route("/guest_login", methods=["POST"])
+def guest_login():
+    # 세션에 guest 사용자 설정
+    session["user_id"] = "guest"
+    session["username"] = "게스트"
+    return redirect(url_for("guest.guest_home"))  # 게스트용 홈 페이지

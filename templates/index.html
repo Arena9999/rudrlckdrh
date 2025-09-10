@@ -5,16 +5,23 @@
 {% block content %}
 <section class="main">
     <div class="main-container">
-        <!-- 왼쪽: 소개글 -->
-        <div class="intro">
-            <h1>혁신적인 웹 서비스 경험</h1>
-            <p>최신 기술로 구현된 직관적이고 효율적인 웹 플랫폼을 만나보세요</p>
-        </div>
+        {% if not session.get('user_id') %}
+            <!-- 비로그인 시 소개글과 영상 -->
+            <div class="intro">
+                <h1>혁신적인 웹 서비스 경험</h1>
+                <p>최신 기술로 구현된 직관적이고 효율적인 웹 플랫폼을 만나보세요</p>
+            </div>
 
-        <!-- 오른쪽: 영상 -->
-        <div class="video-box">
-            <p>웹 동작 시연 영상</p>
-        </div>
+            <div class="video-box">
+                <p>웹 동작 시연 영상</p>
+            </div>
+        {% else %}
+            <!-- 로그인 시 보여줄 내용 -->
+            <div class="welcome">
+                <h2>환영합니다, 사용자님!</h2>
+                <p>로그인에 성공하셨습니다. 이제 서비스를 자유롭게 이용하세요.</p>
+            </div>
+        {% endif %}
     </div>
 </section>
 {% endblock %}
