@@ -132,10 +132,28 @@ main {
     border-radius: 6px;
     cursor: pointer;
     transition: 0.3s;
+    margin-bottom: -5px;
 }
+
+.form-container .guest {
+    width: 100%;
+    padding: 12px;
+    background: darkgray;
+    border: none;
+    color: #fff;
+    font-size: 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
 
 .form-container button:hover {
     background: #1d4ed8;
+}
+
+.form-container .guest:hover{
+    background: gray;
 }
 
 .form-container a {

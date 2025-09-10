@@ -7,3 +7,15 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 });
+
+
+const flashContainer = document.getElementById("flash-container");
+if (flashContainer) {
+    const messagesData = flashContainer.dataset.messages;
+    if (messagesData) {
+        const messages = messagesData.split("|");
+        messages.forEach(msg => {
+            alert(msg);
+        });
+    }
+}
