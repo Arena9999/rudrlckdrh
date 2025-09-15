@@ -1,25 +1,20 @@
 from flask import Flask, flash, redirect, render_template, Blueprint, session, request, jsonify, url_for, Response
 import sqlite3, cv2
 
-from db import database
-#from templates.login.login import login_bp
-#from templates.signup.signup import signup_bp
+from db import add_user, verify_user, get_user_by_username, get_connection, init_db
 from router.users.login import login_bp
 from router.users.signup import signup_bp
-from router.guest.guest import guest_bp
+from router.records.save import save_bp
+from router.records.records import records_bp
 
 app = Flask(__name__)
 app.secret_key = "your secret_key"
 app.register_blueprint(signup_bp)
 app.register_blueprint(login_bp)
-app.register_blueprint(guest_bp)
+app.register_blueprint(save_bp)
+app.register_blueprint(records_bp)
 
-database.init_db()
-
-def get_db_connection():
-    conn = sqlite3.connect('database.db')
-    conn.row_factory = sqlite3.Row
-    return conn
+init_db()
 
 
 @app.route("/")
@@ -31,9 +26,9 @@ def logout():
     session.pop("user_id", None)
     return redirect(url_for("index"))
 
-@app.route("/com")
-def com():
-    return render_template("com.html")
+@app.route("/cva")
+def cva():
+    return render_template("cva.html")
 
 @app.route("/feedback")
 def feedback():

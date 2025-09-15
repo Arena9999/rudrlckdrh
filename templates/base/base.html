@@ -7,17 +7,23 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <!-- 헤더 -->
     <header>
         <nav class="navbar">
             <div class="logo">
+                {% if session.get('user_id') == 'guest' %}
+                <a href="{{ url_for('logout') }}">
+                    <img src="{{ url_for('static', filename='logo.png') }}" alt="logo" height="30">
+                </a>
+                {% else %}
                 <a href="{{ url_for('index') }}">
                     <img src="{{ url_for('static', filename='logo.png') }}" alt="logo" height="30">
                 </a>
+                {% endif %}
             </div>
             <div class="menu">
-                {% if session.get('user_id') %}
+                {% if session.get('user_id') and session.get('user_id') != 'guest' %}
                     <a href="{{ url_for('logout') }}">로그아웃</a>
+                    <a href="{{ url_for('records.records') }}">기록 보기</a>
                 {% else %}
                     <a href="{{ url_for('signup.register') }}">회원가입</a>
                     <a href="{{ url_for('login.login') }}">로그인</a>
@@ -26,12 +32,10 @@
         </nav>
     </header>
 
-    <!-- 메인 컨텐츠 -->
     <main>
         {% block content %}{% endblock %}
     </main>
 
-    <!-- 푸터 -->
     <footer>
         <div class="footer-links">
             <a href="{{ url_for('feedback') }}">피드백/버그 제보</a> |
