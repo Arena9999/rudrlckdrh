@@ -1,11 +1,68 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <title>CVA 실시간 측정</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CVA 측정</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-  <h2>CVA 실시간 측정</h2>
-  <img src="{{ url_for('cva.cva_feed') }}" width="640" height="480">
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                {% if session.get('user_id') == 'guest' %}
+                <a href="{{ url_for('logout') }}">
+                    <img src="{{ url_for('static', filename='logo.png') }}" alt="logo" height="30">
+                </a>
+                {% else %}
+                <a href="{{ url_for('index') }}">
+                    <img src="{{ url_for('static', filename='logo.png') }}" alt="logo" height="30">
+                </a>
+                {% endif %}
+            </div>
+            <div class="menu">
+                {% if session.get('user_id') and session.get('user_id') != 'guest' %}
+                    <a href="{{ url_for('logout') }}">로그아웃</a>
+                    <a href="{{ url_for('records.records') }}">기록 보기</a>
+                {% else %}
+                    <a href="{{ url_for('signup.register') }}">회원가입</a>
+                    <a href="{{ url_for('login.login') }}">로그인</a>
+                {% endif %}
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="cva-container">
+        
+        <!-- 카메라 화면 -->
+        <div class="camera-wrapper">
+
+          <video id="video" width="640" height="480" autoplay playsinline></video>
+          <canvas id="canvas" width="640" height="480"></canvas>
+          <div id="status">CVA: --, 상태: --</div>
+          {% if session.get('user_id') and session.get('user_id') != 'guest' %}
+          <button id="captureBtn">사진 찍기</button>
+          <span id="countdownDisplay" style="margin-left:10px; font-weight:bold; font-size:16px;"></span>
+          {% endif %}
+        </div>
+    </div>
+    </main>
+
+    <footer>
+        <div class="footer-links">
+            <a href="{{ url_for('feedback') }}">피드백/버그 제보</a> |
+            <a href="{{ url_for('FAQ') }}">FAQ</a> |
+            <a href="{{ url_for('security') }}">보안 안내</a> |
+            <a href="{{ url_for('TAC') }}">약관 및 개인정보 처리방침</a>
+        </div>
+        <p>© 2025 웹 서비스 플랫폼. All rights reserved.</p>
+    </footer>
+
+
 </body>
-</html>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/pose@0.5/pose.js" ></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" ></script>
+<script src="{{ url_for('static', filename='script.js') }}"></script>

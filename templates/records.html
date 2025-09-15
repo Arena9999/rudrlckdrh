@@ -1,0 +1,26 @@
+{% extends "base/base.html" %}
+
+{% block title %}기록{% endblock %}
+
+{% block content %}
+<section class="form-container2">
+  <h1>{{ username }}님의 기록</h1>
+  <a href="{{ url_for('index') }}">메인으로</a>
+  <div class="t">
+  <table border="1">
+    <tr><th>시간</th><th>CVA 값</th><th>상태</th><th>사진</th></tr>
+    {% for r in records %}
+    <tr>
+      <td>{{ r["created_at"] }}</td>
+      <td>{{ r["cva_value"] }}°</td>
+      <td>{{ r["status"] }}</td>
+      <td><img src="{{ r['image_path'] }}" width="150"></td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+
+</section>
+{% endblock %}
+
+

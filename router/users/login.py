@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request, url_for, flash, redirect, session
-from db import database
+from werkzeug.security import check_password_hash
+from db import verify_user, get_user_by_username
 
 login_bp = Blueprint('login', __name__)
 
@@ -13,9 +14,10 @@ def login():
             flash("아이디와 비밀번호를 입력해주세요.")
             return redirect(url_for("login.login"))
 
-        if database.verify_user(username, password):
-            user = database.get_user_by_id(username)
+        if verify_user(username, password):
+            user = get_user_by_username(username)
             session["user_id"] = user["id"]
+            session["username"] = user["username"]
             flash("로그인 성공!")
             return redirect(url_for("index"))  # 메인 페이지
         else:

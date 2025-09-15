@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request, url_for, flash, redirect, session
-from db import database
+from db import add_user
+from werkzeug.security import generate_password_hash
 
 signup_bp = Blueprint('signup', __name__)
 
@@ -18,7 +19,9 @@ def register():
             flash("비밀번호가 일치하지 않습니다.")
             return redirect(url_for("signup.register"))
 
-        if database.add_user(username, password):
+        hashed_pw = generate_password_hash(password)
+
+        if add_user(username, password):
             flash("회원가입 완료! 로그인 해주세요.")
             return redirect(url_for("login.login"))
         else:
@@ -29,9 +32,9 @@ def register():
 
 
 # 게스트 로그인
-@signup_bp.route("/guest_login", methods=["POST"])
+@signup_bp.route("/", methods=["POST"])
 def guest_login():
     # 세션에 guest 사용자 설정
     session["user_id"] = "guest"
     session["username"] = "게스트"
-    return redirect(url_for("guest.guest_home"))  # 게스트용 홈 페이지
+    return redirect(url_for("index"))  # 게스트용 홈 페이지
