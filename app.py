@@ -4,15 +4,24 @@ import sqlite3, cv2
 from db import add_user, verify_user, get_user_by_username, get_connection, init_db
 from router.users.login import login_bp
 from router.users.signup import signup_bp
-from router.records.save import save_bp
-from router.records.records import records_bp
+from router.records.save_photo import save_photo_bp, images_bp
+from router.records.video import videos_bp
+from router.records.stream import stream_bp
+from router.records.videos.full import full_videos_bp
+from router.records.videos.highlight import highlight_bp
+from router.footerlinks.footer import footer_bp
 
 app = Flask(__name__)
 app.secret_key = "your secret_key"
 app.register_blueprint(signup_bp)
 app.register_blueprint(login_bp)
-app.register_blueprint(save_bp)
-app.register_blueprint(records_bp)
+app.register_blueprint(save_photo_bp)
+app.register_blueprint(videos_bp)
+app.register_blueprint(stream_bp)
+app.register_blueprint(images_bp)
+app.register_blueprint(full_videos_bp)
+app.register_blueprint(highlight_bp)
+app.register_blueprint(footer_bp)
 
 init_db()
 
@@ -30,21 +39,9 @@ def logout():
 def cva():
     return render_template("cva.html")
 
-@app.route("/feedback")
-def feedback():
-    return render_template("footer-links/feedback.html")
-
-@app.route("/FAQ")
-def FAQ():
-    return render_template("footer-links/FAQ.html")
-
-@app.route("/security")
-def security():
-    return render_template("footer-links/security.html")
-
-@app.route("/TAC")
-def TAC():
-    return render_template("footer-links/TAC.html")
+@app.route("/MT")
+def MT():
+    return render_template("MT.html")
 
 
 

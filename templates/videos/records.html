@@ -14,13 +14,17 @@
       <td>{{ r["created_at"] }}</td>
       <td>{{ r["cva_value"] }}°</td>
       <td>{{ r["status"] }}</td>
-      <td><img src="{{ r['image_path'] }}" width="150"></td>
+      <td><img src="{{ url_for('static', filename=r['image_path'].replace('static/', '')) }}" width="150" class="clickable-img" alt="CVA 이미지"></td>
     </tr>
     {% endfor %}
   </table>
 </div>
 
 </section>
+<div id="imgModal" class="modal">
+  <span class="close">&times;</span>
+  <img class="modal-content" id="modalImg">
+</div>
 {% endblock %}
 
 
