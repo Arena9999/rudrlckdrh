@@ -23,6 +23,7 @@ def init_db():
             password TEXT NOT NULL,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         );
+
         CREATE TABLE IF NOT EXISTS cva_records (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             user_id INTEGER NOT NULL,
@@ -32,10 +33,22 @@ def init_db():
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             FOREIGN KEY (user_id) REFERENCES users (id)
         );
+
+        CREATE TABLE IF NOT EXISTS full_videos (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER NOT NULL,
+            video_path TEXT NOT NULL,
+            timestamp TEXT NOT NULL,  -- 업로드/녹화 시간
+            FOREIGN KEY (user_id) REFERENCES users (id)
+        );
+
+        CREATE TABLE IF NOT EXISTS highlight_videos (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER NOT NULL,
+            video_path TEXT NOT NULL,
+            timestamp TEXT NOT NULL,
+            FOREIGN KEY (user_id) REFERENCES users (id)
+        );
     """)
     conn.commit()
     conn.close()
-
-
-
-

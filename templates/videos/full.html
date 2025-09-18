@@ -1,0 +1,25 @@
+{% extends "base/base.html" %}
+
+{% block title %}풀 영상 기록{% endblock %}
+
+{% block content %}
+<section class="form-container2">
+  <h1>{{ username }}님의 풀영상 기록</h1>
+  <a href="{{ url_for('index') }}">메인으로</a>
+  <div class="t">
+    <table border="1">
+      <tr><th>시간</th><th>영상</th></tr>
+      {% for v in videos %}
+      <tr>
+        <td>{{ v['timestamp'] }}</td>
+        <td>
+          <video width="320" controls>
+            <source src="{{ url_for('static', filename=v['video_path'].replace('static/', '')) }}" type="video/webm">
+          </video>
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+</section>
+{% endblock %}

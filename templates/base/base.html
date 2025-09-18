@@ -23,7 +23,8 @@
             <div class="menu">
                 {% if session.get('user_id') and session.get('user_id') != 'guest' %}
                     <a href="{{ url_for('logout') }}">로그아웃</a>
-                    <a href="{{ url_for('records.records') }}">기록 보기</a>
+                    <a href="{{ url_for('records_videos.videos') }}">영상 보기</a>
+                    <a href="{{ url_for('records_images.record') }}">사진 보기</a>
                 {% else %}
                     <a href="{{ url_for('signup.register') }}">회원가입</a>
                     <a href="{{ url_for('login.login') }}">로그인</a>
@@ -38,10 +39,10 @@
 
     <footer>
         <div class="footer-links">
-            <a href="{{ url_for('feedback') }}">피드백/버그 제보</a> |
-            <a href="{{ url_for('FAQ') }}">FAQ</a> |
-            <a href="{{ url_for('security') }}">보안 안내</a> |
-            <a href="{{ url_for('TAC') }}">약관 및 개인정보 처리방침</a>
+            <a href="{{ url_for('footer.feedback') }}">피드백/버그 제보</a> |
+            <a href="{{ url_for('footer.FAQ') }}">FAQ</a> |
+            <a href="{{ url_for('footer.security') }}">보안 안내</a> |
+            <a href="{{ url_for('footer.TAC') }}">약관 및 개인정보 처리방침</a>
         </div>
         <p>© 2025 웹 서비스 플랫폼. All rights reserved.</p>
     </footer>
