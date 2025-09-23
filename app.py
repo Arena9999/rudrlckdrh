@@ -23,6 +23,7 @@ app.register_blueprint(images_bp)
 app.register_blueprint(full_videos_bp)
 app.register_blueprint(highlight_bp)
 app.register_blueprint(footer_bp)
+app.register_blueprint(checklist_bp)
 
 init_db()
 
