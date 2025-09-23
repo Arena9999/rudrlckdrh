@@ -10,6 +10,7 @@ from router.records.stream import stream_bp
 from router.records.videos.full import full_videos_bp
 from router.records.videos.highlight import highlight_bp
 from router.footerlinks.footer import footer_bp
+from templates.user_survice.checklist import checklist_bp
 
 app = Flask(__name__)
 app.secret_key = "your secret_key"
@@ -45,7 +46,7 @@ def MT():
 
 @app.route("/CL")
 def CL():
-    return render_template("user_survice/CL.html")
+    return render_template("user_survice/cheklist/CL.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
