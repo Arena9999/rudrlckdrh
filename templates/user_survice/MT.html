@@ -1,0 +1,148 @@
+{% extends "base/base.html" %}
+
+{% block title %}스트레칭 가이드{% endblock %}
+
+{% block content %}
+  <!-- 메인 컨텐츠 -->
+  <main>
+    <section class="main">
+      <h1>스트레칭 가이드</h1>
+      <p>집에서 쉽게 따라 하는 거북목 스트레칭!</p>
+    </section>
+
+    <!-- 스트레칭 목록 -->
+    <div class="form-container2">
+      <h2>목 스트레칭 8가지 방법</h2>
+      <div style="margin-top: 8px; padding: 10px; background: #f1f5f9; border-left: 4px solid #2563eb; border-radius: 6px; font-size: 0.9rem; color: #444;">
+        💡 <strong>Tip:</strong> 모든 동작은 천천히 자연스럽게 스트레칭해주세요.
+      </div>
+      <ul style="list-style: none; padding: 0; text-align: left;">
+
+        <!-- 1 -->
+        <li style="margin-bottom: 30px; display: flex; gap: 20px; align-items: flex-start;">
+          <div style="flex: 2;">
+            <strong>1. 누워서 턱 당기기</strong><br>
+            무릎을 굽혀 발을 지면에 대고 눕습니다. 턱을 아래로 당깁니다. (7회 반복)
+            <div style="margin-top: 8px; padding: 10px; background: #f1f5f9; border-left: 4px solid #2563eb; border-radius: 6px; font-size: 0.9rem; color: #444;">
+              💡 <strong>Tip:</strong> 턱을 아래로 당길 때는 가슴이 올라오지 않도록 주의하시고 또 턱을 올리거나 머리를 들지 않도록 합니다.
+            </div>
+          </div>
+          <div style="flex: 1; text-align: center;">
+            <img src="data:image/jpeg;base64,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" alt="누워서 턱 당기기" style="max-width: 100%; border-radius: 6px;">
+          </div>
+        </li>
+
+        <!-- 2 -->
+        <li style="margin-bottom: 30px; display: flex; gap: 20px; align-items: flex-start;">
+          <div style="flex: 2;">
+            <strong>2. 누워서 어깨뼈 모으기</strong><br>
+            팔을 자연스럽게 벌린 뒤 팔꿈치 각도를 90도로 굽힙니다.<br>
+            양 어깨뼈 뒤쪽, 그리고 아래쪽으로 모아 바닥을 향해 누릅니다. (7회 반복)
+            <div style="margin-top: 8px; padding: 10px; background: #f1f5f9; border-left: 4px solid #2563eb; border-radius: 6px; font-size: 0.9rem; color: #444;">
+              💡 <strong>Tip:</strong> 팔을 움직일 때 어깨 관절이 회전하지 않도록, 가슴과 등이 올라가지 않도록 주의하면서 반복해 주세요.
+            </div>
+          </div>
+          <div style="flex: 1; text-align: center;">
+            <img src="https://via.placeholder.com/250x150?text=Stretch+2" alt="누워서 어깨뼈 모으기" style="max-width: 100%; border-radius: 6px;">
+          </div>
+        </li>
+
+        <!-- 3 -->
+        <li style="margin-bottom: 30px; display: flex; gap: 20px; align-items: flex-start;">
+          <div style="flex: 2;">
+            <strong>3. 앉아서 턱 당기기</strong><br>
+            등받이가 있는 의자에 앉아 턱을 뒤로 당기고, 그 상태에서 시선을 위쪽으로 살짝 올려봅니다. (7회 반복)
+            <div style="margin-top: 8px; padding: 10px; background: #f1f5f9; border-left: 4px solid #2563eb; border-radius: 6px; font-size: 0.9rem; color: #444;">
+              💡 <strong>Tip:</strong> 머리를 숙이거나 가슴이 올라가지 않아야 합니다. 또 허리를 뒤로 젖히지 않도록 주의합니다.
+            </div>
+          </div>
+          <div style="flex: 1; text-align: center;">
+            <img src="https://via.placeholder.com/250x150?text=Stretch+3" alt="앉아서 턱 당기기" style="max-width: 100%; border-radius: 6px;">
+          </div>
+        </li>
+
+        <!-- 4 -->
+        <li style="margin-bottom: 30px; display: flex; gap: 20px; align-items: flex-start;">
+          <div style="flex: 2;">
+            <strong>4. 앉아서 어깨뼈 모으기</strong><br>
+            팔은 자연스럽게 벌리고 팔꿈치는 90도로 굽힙니다.<br>
+            양팔을 바깥쪽으로 펼치면서 양 어깨뼈가 뒤쪽, 아래쪽으로 모이도록 합니다. (8회 반복)
+            <div style="margin-top: 8px; padding: 10px; background: #f1f5f9; border-left: 4px solid #2563eb; border-radius: 6px; font-size: 0.9rem; color: #444;">
+              💡 <strong>Tip:</strong> 어깨에 과도한 힘이 들어가지 않도록 자세를 유지하며 반복해 주세요.
+            </div>
+          </div>
+          <div style="flex: 1; text-align: center;">
+            <img src="https://via.placeholder.com/250x150?text=Stretch+4" alt="앉아서 어깨뼈 모으기" style="max-width: 100%; border-radius: 6px;">
+          </div>
+        </li>
+
+        <!-- 5 -->
+        <li style="margin-bottom: 30px; display: flex; gap: 20px; align-items: flex-start;">
+          <div style="flex: 2;">
+            <strong>5. 경추 신전 운동</strong><br>
+            팔은 자연스럽게 벌리고, 팔꿈치 90도로 굽혀 양 어깨뼈가 뒤로 모이도록 하고<br>
+            고개를 들어 천장 쪽으로 향합니다. (8회 반복)
+            <div style="margin-top: 8px; padding: 10px; background: #f1f5f9; border-left: 4px solid #2563eb; border-radius: 6px; font-size: 0.9rem; color: #444;">
+              💡 <strong>Tip:</strong> 힘을 뺀 상태에서 척추 중심으로 어깨뼈가 가볍게 뒤로 밀린다는 느낌으로 열어주세요.
+            </div>
+          </div>
+          <div style="flex: 1; text-align: center;">
+            <img src="https://via.placeholder.com/250x150?text=Stretch+5" alt="경추 신전 운동" style="max-width: 100%; border-radius: 6px;">
+          </div>
+        </li>
+
+        <!-- 6 -->
+        <li style="margin-bottom: 30px; display: flex; gap: 20px; align-items: flex-start;">
+          <div style="flex: 2;">
+            <strong>6. 벽 밀기</strong><br>
+            벽을 마주 보고 서서 양손을 벽에 대고 팔꿈치를 펴 주세요.<br>
+            그 상태에서 양손으로 벽을 밀며 시선은 양손 사이를 바라봅니다. (9회 반복)
+            <div style="margin-top: 8px; padding: 10px; background: #f1f5f9; border-left: 4px solid #2563eb; border-radius: 6px; font-size: 0.9rem; color: #444;">
+              💡 <strong>Tip:</strong> 허리나 목이 과도하게 움직이지 않도록 하고 어깨뼈가 올라가지 않게 유지하세요.
+            </div>
+          </div>
+          <div style="flex: 1; text-align: center;">
+            <img src="https://via.placeholder.com/250x150?text=Stretch+6" alt="벽 밀기" style="max-width: 100%; border-radius: 6px;">
+          </div>
+        </li>
+
+        <!-- 7 -->
+        <li style="margin-bottom: 30px; display: flex; gap: 20px; align-items: flex-start;">
+          <div style="flex: 2;">
+            <strong>7. 벽에 기대어 팔 올리고 내리기</strong><br>
+            양손을 벽에 대고 팔을 펴서 벽을 미는 상태에서<br>
+            팔을 위로 천천히 올리고 내립니다. (9회 반복)
+            <div style="margin-top: 8px; padding: 10px; background: #f1f5f9; border-left: 4px solid #2563eb; border-radius: 6px; font-size: 0.9rem; color: #444;">
+              💡 <strong>Tip:</strong> 허리와 고개가 움직이지 않도록 주의하세요.
+            </div>
+          </div>
+          <div style="flex: 1; text-align: center;">
+            <img src="https://via.placeholder.com/250x150?text=Stretch+7" alt="벽에 기대어 팔 올리고 내리기" style="max-width: 100%; border-radius: 6px;">
+          </div>
+        </li>
+
+        <!-- 8 -->
+        <li style="margin-bottom: 30px; display: flex; gap: 20px; align-items: flex-start;">
+          <div style="flex: 2;">
+            <strong>8. 벽에 전완을 대고 팔 올리고 내리기</strong><br>
+            양쪽 전완(손~팔꿈치)을 벽에 붙이고, 전완으로 벽을 밀며<br>
+            팔을 위로 천천히 올리고 내립니다. (9회 반복)
+            <div style="margin-top: 8px; padding: 10px; background: #f1f5f9; border-left: 4px solid #2563eb; border-radius: 6px; font-size: 0.9rem; color: #444;">
+              💡 <strong>Tip:</strong> 허리와 고개가 움직이지 않도록 반복해 주세요.
+            </div>
+          </div>
+          <div style="flex: 1; text-align: center;">
+            <img src="https://via.placeholder.com/250x150?text=Stretch+8" alt="벽에 전완을 대고 팔 올리고 내리기" style="max-width: 100%; border-radius: 6px;">
+          </div>
+        </li>
+
+      </ul>
+    </div>
+
+    <!-- 출처 -->
+    <div class="source-box" style="margin-top: 30px; padding: 10px; background: #f9fafb; border-radius: 6px; font-size: 0.8rem; color: #666;">
+      출처: <a href="https://blog.naver.com/happy_snubh/223529460665" target="_blank" style="color: #2563eb; text-decoration: none;">분당서울대학교병원 공식블로그</a>
+    </div>
+
+  </main>
+{% endblock %}

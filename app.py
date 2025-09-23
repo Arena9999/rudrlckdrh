@@ -41,9 +41,11 @@ def cva():
 
 @app.route("/MT")
 def MT():
-    return render_template("MT.html")
+    return render_template("user_survice/MT.html")
 
-
+@app.route("/CL")
+def CL():
+    return render_template("user_survice/CL.html")
 
 if __name__ == "__main__":
     app.run(debug=True)

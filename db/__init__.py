@@ -49,6 +49,15 @@ def init_db():
             timestamp TEXT NOT NULL,
             FOREIGN KEY (user_id) REFERENCES users (id)
         );
+
+        CREATE TABLE IF NOT EXISTS checklist (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER NOT NULL,
+            factor_key TEXT NOT NULL,
+            checked INTEGER DEFAULT 0,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            UNIQUE(user_id, factor_key)
+        );
     """)
     conn.commit()
     conn.close()

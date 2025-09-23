@@ -176,6 +176,9 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (!highlightRecording) startHighlightRecording();
       }
     }
+    else {
+      statusEl.innerText = "CVA: 0.0°, 상태: 인식x";
+    }
 
     ctx.restore();
   }
@@ -219,7 +222,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       recording = false;
       clearInterval(timerInterval);
       recordBtn.innerText = "영상 촬영";
-      recordTimeEl.innerText = "저장 완료";
+      recordTimeEl.innerText = "저장 중";
     } else {
       mediaRecorder.start();
       recording = true;
