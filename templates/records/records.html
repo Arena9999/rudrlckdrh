@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CVA 측정</title>
+    <title>기록 보기</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    
 </head>
+
 <body>
     <header>
         <nav class="navbar">
@@ -31,30 +33,34 @@
             </div>
         </nav>
     </header>
+  <h1>기록 보기</h1>
+  <p class="subtitle">원하는 기록을 선택하여 확인하세요</p>
 
-    <main>
-        <div class="cva-container">
-        
-        <!-- 카메라 화면 -->
-        <div class="camera-wrapper">
-
-          <video id="video" width="640" height="480" autoplay playsinline></video>
-          <canvas id="canvas" width="640" height="480"></canvas>
-          <div id="status">CVA: --, 상태: --</div>
-          <div id="controls"></div>
-          {% if session.get('user_id') and session.get('user_id') != 'guest' %}
-          <div class="lcapture">
-          <button id="captureBtn">사진 찍기</button>
-          <button id="recordBtn">영상 촬영</button>
-          <div id="recording-time" style="margin-top:10px; font-weight:bold; font-size:16px; color:red;"></div>
-          <span id="countdownDisplay" style="display:block; margin-top:10px; font-weight:bold; font-size:16px;"></span>
-          </div>
-          {% endif %}
-        </div>
+  <div class="container">
+    <div class="card" data-href="{{ url_for('full_videos.show_full_videos') }}" style="cursor: pointer;" onclick="goToLink(this)">
+      <div class="card-icon">▶️</div>
+      <h2>풀영상 보기</h2>
+      <p>저장된 풀영상을 확인하고 재생할 수 있습니다. 풀영상을 확인하세요.</p>
+      <a href="{{ url_for('full_videos.show_full_videos') }}" class="fu">바로가기 →</a>
     </div>
-    </main>
 
-    <footer>
+    <div class="card" data-href="{{ url_for('highlight_videos.show_highlight_videos') }}" style="cursor: pointer;" onclick="goToLink(this)">
+      <div class="card-icon">⭐</div>
+      <h2>하이라이트</h2>
+      <p>거북목 순간들을 모아놓은 영상을 확인할 수 있습니다. 거북목 장면만 확인하세요.</p>
+      <a href="{{ url_for('highlight_videos.show_highlight_videos') }}" class="hi">바로가기 →</a>
+    </div>
+
+    <div class="card" data-href="{{ url_for('records_images.records_images') }}" style="cursor: pointer;" onclick="goToLink(this)">
+      <div class="card-icon">🖼️</div>
+      <h2>사진 보기</h2>
+      <p>저장된 사진들을 확인할 수 있습니다. 거북목인 순간들을 캡쳐해서 확인하세요.</p>
+      <a href="{{ url_for('records_images.records_images') }}" class="im">바로가기 →</a>
+    </div>
+  </div>
+
+
+    <footer style="position: absolute; bottom: 0; width: 97%;">
         <div class="footer-links">
             <a href="{{ url_for('footer.feedback') }}">피드백/버그 제보</a> |
             <a href="{{ url_for('footer.FAQ') }}">FAQ</a> |
@@ -63,10 +69,7 @@
         </div>
         <p>© 2025 웹 서비스 플랫폼. All rights reserved.</p>
     </footer>
-
-
 </body>
-
 
 <script src="https://cdn.jsdelivr.net/npm/@mediapipe/pose@0.5/pose.js" ></script>
 <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" ></script>

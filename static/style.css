@@ -7,6 +7,7 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    height: 100%;
 }
 
 /* 헤더 */
@@ -38,6 +39,7 @@ main {
     flex: 1;
     padding: 40px 20px;
     text-align: center;
+    width: 100%;
 }
 
 /* 메인 페이지 */
@@ -311,4 +313,85 @@ footer .footer-links a:hover {
   font-size: 40px;
   font-weight: bold;
   cursor: pointer;
+}
+
+h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 0.3em;
+    text-align: center;
+}
+
+p.subtitle {
+    color: #555;
+    margin-bottom: 4em;
+    margin-top: 1px;
+    text-align: center;
+}
+
+.container {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    margin-bottom: 3rem;
+}
+
+.card {
+    background: white;
+    border-radius: 20px;
+    padding: 2rem;
+    width: 250px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+}
+
+.card-icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.card h2 {
+    margin: 0.5rem 0;
+    margin-bottom: 1.5rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.card p {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 1rem;
+    flex-grow: 1;
+}
+
+.card a {
+    font-size: 0.9rem;
+    display: inline-block;
+    text-decoration: none;
+    margin-top: auto;
+}
+
+.card a.fu{
+    text-decoration: none;
+    font-weight: bold;
+    color: #2563eb;
+}
+
+.card a.im{
+    text-decoration: none;
+    font-weight: bold;
+    color: #10b981;
+}
+
+.card a.hi{
+    text-decoration: none;
+    font-weight: bold;
+    color: #f59e0b;
 }

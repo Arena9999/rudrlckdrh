@@ -6,16 +6,20 @@ from .domains.users.account import add_user
 from .domains.auth.verify import verify_user
 from .domains.auth.username import get_user_by_username
 
+# DB 파일 경로
 DB_NAME = os.path.join(os.path.dirname(os.path.abspath(__file__)), "database.db")
 
 def get_connection():
+    """DB 연결 반환"""
     conn = sqlite3.connect(DB_NAME, timeout=10, check_same_thread=False)
     conn.row_factory = sqlite3.Row
     return conn
 
 def init_db():
+    """DB 초기화 (테이블 생성)"""
     conn = get_connection()
     cursor = conn.cursor()
+
     cursor.executescript("""
         CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -39,6 +43,7 @@ def init_db():
             user_id INTEGER NOT NULL,
             video_path TEXT NOT NULL,
             timestamp TEXT NOT NULL,  -- 업로드/녹화 시간
+            forward_count INTEGER DEFAULT 0,
             FOREIGN KEY (user_id) REFERENCES users (id)
         );
 
@@ -56,8 +61,10 @@ def init_db():
             factor_key TEXT NOT NULL,
             checked INTEGER DEFAULT 0,
             updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            UNIQUE(user_id, factor_key)
+            UNIQUE(user_id, factor_key),
+            FOREIGN KEY (user_id) REFERENCES users (id)
         );
     """)
+
     conn.commit()
     conn.close()

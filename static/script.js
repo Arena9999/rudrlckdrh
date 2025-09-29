@@ -48,13 +48,19 @@ document.addEventListener("DOMContentLoaded", async () => {
   let recordStartTime = null;
 
   let highlightRecording = false;
+  let highlightRecorder = null;
   let highlightChunks = [];
+  let highlightStartTime = null;
 
-  let fullVideoPath = null;   // 서버에 저장된 풀영상 경로
-  let fullStartTime = null;   // 풀영상 시작 시각
-  let highlightStartTime = null; // 하이라이트 시작 시각
-
+  let forwardHeadStartTime = null;
+  const FORWARD_THRESHOLD = 25;    // CVA 임계값
+  const HOLD_DURATION = 5;         // 5초 이상 지속해야 녹화 시작
   const HIGHLIGHT_POST_FRAMES = 300; // 10초 후 (30fps 기준)
+
+  let forward_count = 0;
+  let prevStatus = "Normal";
+
+  const status = "Normal";
 
   // =====================
   // 시간 포맷 함수
@@ -67,7 +73,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   // =====================
-  // Pose 계산
+  // cva 계산
   // =====================
   function calculateCVA(shoulder, ear) {
     const dx = ear.x - shoulder.x;
@@ -110,12 +116,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     const res = await fetch("/full_videos", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ video: dataUrl, type: "full" })
+      body: JSON.stringify({ video: dataUrl, type: "full", count: forward_count})
     });
     const json = await res.json();
-    fullVideoPath = json.path;
-    fullVideoId = json.id; 
-    recordTimeEl.innerText = "풀영상 저장 완료";
+    recordTimeEl.innerText = "풀영상 저장 완료 (거북목 "+ forward_count + "회)";
+
+    forward_count = 0;
   };
 
   async function blobToDataURL(blob) {
@@ -144,10 +150,11 @@ document.addEventListener("DOMContentLoaded", async () => {
       const cva_r = calculateCVA(shoulder_r, ear_r);
       const cva_l = calculateCVA(shoulder_l, ear_l);
       const cva_avg = (cva_r + cva_l) / 2;
-      const status = cva_avg >= 25 ? "Forward Head" : "Normal";
+      const status = cva_avg >= FORWARD_THRESHOLD ? "Forward Head" : "Normal";
 
       statusEl.innerText = `CVA: ${cva_avg.toFixed(1)}°, 상태: ${status}`;
-      ctx.strokeStyle = cva_avg >= 25 ? "red" : "green";
+      ctx.strokeStyle = cva_avg >= FORWARD_THRESHOLD ? "red" : "green";
+
 
       const points = [shoulder_r, ear_r, shoulder_l, ear_l];
       points.forEach((p) => {
@@ -167,17 +174,39 @@ document.addEventListener("DOMContentLoaded", async () => {
         ctx.stroke();
       };
 
-      line(shoulder_r, ear_r, "red");
-      line(shoulder_l, ear_l, "red");
+      if (cva_avg >= FORWARD_THRESHOLD) {
+        line(shoulder_r, ear_r, "red");   // 거북목 → 빨강
+      } else {
+        line(shoulder_r, ear_r, "green"); // 정상 → 초록
+      }
+
+      // 왼쪽 귀–어깨 선
+      if (cva_avg >= FORWARD_THRESHOLD) {
+        line(shoulder_l, ear_l, "red");
+      } else {
+        line(shoulder_l, ear_l, "green");
+      }
+
       line(shoulder_r, shoulder_l, "white");
 
       // 거북목 감지 시 하이라이트 시작
-      if (cva_avg >= 25 && recording) {
-        if (!highlightRecording) startHighlightRecording();
+      if (cva_avg >= FORWARD_THRESHOLD && recording) {
+        if (!forwardHeadStartTime) {
+          forwardHeadStartTime = Date.now();
+        } else {
+          const elapsed = (Date.now() - forwardHeadStartTime) / 1000;
+          if (elapsed >= HOLD_DURATION && !highlightRecording) {
+            startHighlightRecording();
+          }
+        }
+      } else {
+        if (highlightRecording) stopHighlightRecording();
+        forwardHeadStartTime = null;
       }
-    }
-    else {
+    } else {
       statusEl.innerText = "CVA: 0.0°, 상태: 인식x";
+      if (highlightRecording) stopHighlightRecording();
+      forwardHeadStartTime = null;
     }
 
     ctx.restore();
@@ -227,7 +256,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       mediaRecorder.start();
       recording = true;
       recordStartTime = Date.now();
-      fullStartTime = recordStartTime / 1000; // 풀영상 시작 시간 기록
       recordBtn.innerText = "촬영 중지";
       timerInterval = setInterval(() => {
         let elapsed = Math.floor((Date.now() - recordStartTime) / 1000);
@@ -242,10 +270,11 @@ document.addEventListener("DOMContentLoaded", async () => {
   function startHighlightRecording() {
     highlightRecording = true;
     highlightStartTime = Date.now(); // 하이라이트 시작 시간 기록
+    highlightChunks = [];
 
-    const highlightStream = canvas.captureStream(30);
-    const highlightRecorder = new MediaRecorder(highlightStream, { mimeType: "video/webm;codecs=vp9" });
-     const highlightChunks = [];
+    forward_count++;
+
+    highlightRecorder = new MediaRecorder(canvas.captureStream(30), { mimeType: "video/webm;codecs=vp9" });
 
     highlightRecorder.ondataavailable = (e) => { if (e.data.size > 0) highlightChunks.push(e.data); };
 
@@ -258,8 +287,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           video: dataUrl,
-          start: 0,
-          end: Math.floor((Date.now() - highlightStartTime) / 1000)
+          duration: Math.floor((Date.now() - highlightStartTime) / 1000)
         })
       }).then(res => res.json())
         .then(json => console.log("하이라이트 저장 성공:", json))
@@ -271,6 +299,19 @@ document.addEventListener("DOMContentLoaded", async () => {
     highlightRecorder.start();
     console.log("하이라이트 녹화 시작");
 
-    setTimeout(() => highlightRecorder.stop(), (HIGHLIGHT_POST_FRAMES / 30) * 1000);
+  }
+  // =====================
+  // 하이라이트 녹화 종료
+  // =====================
+  function stopHighlightRecording() {
+    if (highlightRecorder && highlightRecording) {
+      highlightRecorder.stop();
+      console.log("하이라이트 녹화 종료");
+    }
   }
 });
+
+function goToLink(element) {
+    const url = element.getAttribute("data-href");
+    window.location.href = url;
+  }

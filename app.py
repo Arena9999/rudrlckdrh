@@ -5,19 +5,19 @@ from db import add_user, verify_user, get_user_by_username, get_connection, init
 from router.users.login import login_bp
 from router.users.signup import signup_bp
 from router.records.save_photo import save_photo_bp, images_bp
-from router.records.video import videos_bp
+from router.records.records import records_bp
 from router.records.stream import stream_bp
 from router.records.videos.full import full_videos_bp
 from router.records.videos.highlight import highlight_bp
 from router.footerlinks.footer import footer_bp
-from templates.user_survice.checklist import checklist_bp
+from router.users.checklist import checklist_bp
 
 app = Flask(__name__)
 app.secret_key = "your secret_key"
 app.register_blueprint(signup_bp)
 app.register_blueprint(login_bp)
 app.register_blueprint(save_photo_bp)
-app.register_blueprint(videos_bp)
+app.register_blueprint(records_bp)
 app.register_blueprint(stream_bp)
 app.register_blueprint(images_bp)
 app.register_blueprint(full_videos_bp)
@@ -43,11 +43,7 @@ def cva():
 
 @app.route("/MT")
 def MT():
-    return render_template("user_survice/MT.html")
-
-@app.route("/CL")
-def CL():
-    return render_template("user_survice/cheklist/CL.html")
+    return render_template("user_service/MT.html")
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True) 

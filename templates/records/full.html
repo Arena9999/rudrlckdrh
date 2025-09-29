@@ -5,10 +5,9 @@
 {% block content %}
 <section class="form-container2">
   <h1>{{ username }}님의 풀영상 기록</h1>
-  <a href="{{ url_for('index') }}">메인으로</a>
   <div class="t">
     <table border="1">
-      <tr><th>시간</th><th>영상</th></tr>
+      <tr><th>시간</th><th>영상</th><th>거북목 횟수</th></tr>
       {% for v in videos %}
       <tr>
         <td>{{ v['timestamp'] }}</td>
@@ -17,6 +16,7 @@
             <source src="{{ url_for('static', filename=v['video_path'].replace('static/', '')) }}" type="video/webm">
           </video>
         </td>
+        <td>{{ v['forward_count'] if v['forward_count'] is not none else 0 }}</td>
       </tr>
       {% endfor %}
     </table>

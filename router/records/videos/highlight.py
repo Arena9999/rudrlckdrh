@@ -54,6 +54,6 @@ def show_highlight_videos():
 
     videos = [{"path": url_for("static", filename=row["video_path"].replace("static/", "")), "timestamp": row["timestamp"]} for row in rows]
 
-    return render_template("videos/highlight.html", username=user["username"], videos=videos)
+    return render_template("records/highlight.html", username=user["username"], videos=videos)
 
 

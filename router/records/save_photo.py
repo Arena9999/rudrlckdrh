@@ -47,8 +47,8 @@ def save_photo():
 
 images_bp = Blueprint("records_images", __name__)  # 이름 고유하게
 
-@images_bp.route("/records")
-def record():
+@images_bp.route("/records_images")
+def records_images():
     if "user_id" not in session:
         return redirect(url_for("index"))
 
@@ -62,4 +62,4 @@ def record():
     ).fetchall()
     conn.close()
 
-    return render_template("videos/records.html", username=user["username"], records=records)
+    return render_template("records/images.html", username=user["username"], records=records)

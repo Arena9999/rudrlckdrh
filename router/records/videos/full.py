@@ -22,6 +22,9 @@ def save_full_video():
     data = request.json
     user_id = session["user_id"]
     video_base64 = data.get("video")
+    print(data)
+    forward_count = data.get("count", 0) 
+    print("Received forward_count:", forward_count)
     
     if not video_base64:
         return jsonify({"error": "영상 데이터 없음"}), 400
@@ -48,15 +51,15 @@ def save_full_video():
     try:
         with get_connection() as conn:
             cur = conn.execute(
-                "INSERT INTO full_videos (user_id, video_path, timestamp) VALUES (?, ?, ?)",
-                (user_id, filepath, kst_str)
+                "INSERT INTO full_videos (user_id, video_path, timestamp, forward_count) VALUES (?, ?, ?, ?)",
+                (user_id, filepath, kst_str, forward_count)
             )
             conn.commit()
             video_id = cur.lastrowid
     except Exception as e:
         return jsonify({"error": f"DB 저장 실패: {e}"}), 500
 
-    return jsonify({"message": "풀영상 저장 완료", "path": filepath, "id": video_id})
+    return jsonify({"message": "풀영상 저장 완료", "path": filepath, "id": video_id, "count": forward_count})
 
 
 # =======================
@@ -76,4 +79,4 @@ def show_full_videos():
     ).fetchall()
     conn.close()
 
-    return render_template("videos/full.html", username=user["username"], videos=videos)
+    return render_template("records/full.html", username=user["username"], videos=videos)

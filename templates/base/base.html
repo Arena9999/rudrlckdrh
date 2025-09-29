@@ -23,8 +23,7 @@
             <div class="menu">
                 {% if session.get('user_id') and session.get('user_id') != 'guest' %}
                     <a href="{{ url_for('logout') }}">로그아웃</a>
-                    <a href="{{ url_for('records_videos.videos') }}">영상 보기</a>
-                    <a href="{{ url_for('records_images.record') }}">사진 보기</a>
+                    <a href="{{ url_for('records.records') }}">기록 보기</a>
                 {% else %}
                     <a href="{{ url_for('signup.register') }}">회원가입</a>
                     <a href="{{ url_for('login.login') }}">로그인</a>
