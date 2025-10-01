@@ -56,12 +56,15 @@ def init_db():
         );
 
         CREATE TABLE IF NOT EXISTS checklist (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            user_id INTEGER NOT NULL,
-            factor_key TEXT NOT NULL,
-            checked INTEGER DEFAULT 0,
-            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            UNIQUE(user_id, factor_key),
+            user_id INTEGER PRIMARY KEY,
+            cold_tingling_posture INTEGER DEFAULT 0,
+            neck_cracking_fatigue_headaches INTEGER DEFAULT 0,
+            bad_sleeping_habit INTEGER DEFAULT 0,
+            computer_over_8h INTEGER DEFAULT 0,
+            neck_shoulder_stiffness INTEGER DEFAULT 0,
+            unrefreshing_sleep INTEGER DEFAULT 0,
+            eye_strain_headaches INTEGER DEFAULT 0,
+            updated_at DATETIME,
             FOREIGN KEY (user_id) REFERENCES users (id)
         );
     """)

@@ -10,7 +10,7 @@ from router.records.stream import stream_bp
 from router.records.videos.full import full_videos_bp
 from router.records.videos.highlight import highlight_bp
 from router.footerlinks.footer import footer_bp
-from router.users.checklist import checklist_bp
+from router.users.user_service import user_service_bp
 
 app = Flask(__name__)
 app.secret_key = "your secret_key"
@@ -23,7 +23,7 @@ app.register_blueprint(images_bp)
 app.register_blueprint(full_videos_bp)
 app.register_blueprint(highlight_bp)
 app.register_blueprint(footer_bp)
-app.register_blueprint(checklist_bp)
+app.register_blueprint(user_service_bp)
 
 init_db()
 
@@ -40,10 +40,6 @@ def logout():
 @app.route("/cva")
 def cva():
     return render_template("cva.html")
-
-@app.route("/MT")
-def MT():
-    return render_template("user_service/MT.html")
 
 if __name__ == "__main__":
     app.run(debug=True) 

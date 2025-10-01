@@ -1,0 +1,54 @@
+{% extends "base/base.html" %}
+
+{% block title %}거북목 체크리스트{% endblock %}
+
+{% block content %}
+<main>
+  <section class="main">
+    <h1>거북목 환경 요인 체크리스트</h1>
+    <p>아래 항목 중 자신에게 해당되는 환경을 체크해 보세요.</p>
+  </section>
+
+  <div class="form-container2">
+    <h2>거북목 발생 요인 7가지</h2>
+    <div style="margin-top: 8px; padding: 10px; background: #fef2f2; border-left: 4px solid #dc2626; border-radius: 6px; font-size: 0.9rem; color: #991b1b;">
+        ⚠️ <strong>주의:</strong> 항목 중 2 ~ 3개 이상이 해당된다면 거북목증후군으로 진행될 수 있습니다.
+    </div>
+
+    <form method="post" action="" onsubmit="return showAlert()">
+      <ul style="list-style: none; padding: 0; margin-top: 20px; text-align: left;">
+        {% for factor in FACTORS %}
+        <li style="margin-bottom: 15px;">
+          <label>
+            <input type="checkbox"
+                   name="factors"
+                   value="{{ factor }}"
+                   style="transform: scale(1.5); margin-right: 8px;"
+                   {% if saved_data.get(factor) == 1 %}checked{% endif %}>
+            <strong>{{ FACTOR_KR[factor] }}</strong>
+          </label>
+        </li>
+        {% endfor %}
+      </ul>
+
+      <div style="margin-top: 20px;">
+        <button type="submit" style="width:400px; height:47px; color:#FFFFFF; font:16px Arial, sans-serif; 
+            background:#2563EB; margin:0 0 -5px 0; padding:12px; border:none; border-radius:6px; cursor:pointer;">
+            제출하기
+        </button>
+        <button type="button" data-href="{{ url_for('user_service.statistics') }}" onclick="goToLink(this)" style="width:100px; height:47px; color:#FFFFFF; font:16px Arial, sans-serif; 
+            background:#626262; margin:0 0 -5px 0; padding:12px; border:none; border-radius:6px; cursor:pointer;">
+            통계보기
+        </button>
+      </div>
+    </form>
+  </div>
+</main>
+
+<script>
+  function showAlert() {
+    alert("체크리스트가 제출되었습니다!");
+    return true;
+  }
+</script>
+{% endblock %}

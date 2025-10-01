@@ -1,0 +1,67 @@
+{% extends "base/base.html" %}
+
+{% block title %}거북목 체크리스트{% endblock %}
+
+{% block content %}
+<main>
+  <section class="main">
+    <h1>거북목 환경 요인 체크리스트</h1>
+    <p>아래 항목 중 자신에게 해당되는 환경을 체크해 보세요.</p>
+  </section>
+
+  <div class="form-container2">
+    <h2>거북목 발생 요인 7가지</h2>
+    <div style="margin-top: 8px; padding: 10px; background: #fef2f2; border-left: 4px solid #dc2626; border-radius: 6px; font-size: 0.9rem; color: #991b1b;">
+        ⚠️ <strong>주의:</strong> 항목 중 2 ~ 3개 이상이 해당된다면 거북목증후군으로 진행될 수 있습니다.
+    </div>
+
+    <form>
+      <ul style="list-style: none; padding: 0; margin-top: 20px; text-align: left;">
+        <li style="margin-bottom: 15px;">
+          <label>
+            <strong>손발이 차고 자주 저리고, 평소 구부정한 자세라는 말을 자주 듣는다.</strong>
+          </label>
+        </li>
+        
+        <li style="margin-bottom: 15px;">
+          <label>
+            <strong>목을 이리저리 돌렸을 때 우두둑하는 소리가 나거나 쉽게 피곤하고 두통이 자주 생긴다.</strong>
+          </label>
+        </li>
+        
+        <li style="margin-bottom: 15px;">
+          <label>
+            <strong>잠 버릇이 나쁘다.</strong>
+          </label>
+        </li>
+
+        <li style="margin-bottom: 15px;">
+          <label>
+            <strong>컴퓨터를 하루에 8시간 이상 하는 편이다.</strong>
+          </label>
+        </li>
+
+        <li style="margin-bottom: 15px;">
+          <label>
+            <strong>목과 어깨가 자주 결린다.</strong>
+          </label>
+        </li>
+
+        <li style="margin-bottom: 15px;">
+          <label>
+            <strong>자고 일어났을 때 개운하지 않다.</strong>
+          </label>
+        </li>
+
+        <li style="margin-bottom: 15px;">
+          <label>
+            <strong>눈이 쉽게 뻐근하고 만성 두통에 시달린다.</strong>
+          </label>
+        </li>
+      </ul>
+
+    </form>
+  </div>
+</main>
+
+{% endblock %}

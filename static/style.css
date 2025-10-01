@@ -39,7 +39,7 @@ main {
     flex: 1;
     padding: 40px 20px;
     text-align: center;
-    width: 100%;
+    width: 97%;
 }
 
 /* 메인 페이지 */
@@ -394,4 +394,16 @@ p.subtitle {
     text-decoration: none;
     font-weight: bold;
     color: #f59e0b;
+}
+
+.card a.ch{
+    text-decoration: none;
+    font-weight: bold;
+    color: #00ff00;
+}
+
+.card a.mt{
+    text-decoration: none;
+    font-weight: bold;
+    color: #82f7ff;
 }
