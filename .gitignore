@@ -4,3 +4,5 @@ static/manifest.json
 static/images/preview.mp4
 static/uploads/hidden/*.webm
 static/uploads/images/*.png
+
+.env

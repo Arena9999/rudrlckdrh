@@ -1,5 +1,8 @@
 from flask import Flask, flash, redirect, render_template, Blueprint, session, request, jsonify, url_for, Response
 import sqlite3, cv2
+from dotenv import load_dotenv
+import os
+load_dotenv()
 
 from db import add_user, verify_user, get_user_by_username, get_connection, init_db
 from router.users.login import login_bp
@@ -13,7 +16,7 @@ from router.footerlinks.footer import footer_bp
 from router.users.user_service import user_service_bp
 
 app = Flask(__name__)
-app.secret_key = "your secret_key"
+app.secret_key = os.environ['SECRET_KEY']
 app.register_blueprint(signup_bp)
 app.register_blueprint(login_bp)
 app.register_blueprint(save_photo_bp)
@@ -42,4 +45,4 @@ def cva():
     return render_template("cva.html")
 
 if __name__ == "__main__":
-    app.run(debug=True) 
+    app.run(os.environ['HOST_IP'], os.environ['HOST_PORT']) 
