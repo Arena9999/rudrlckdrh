@@ -1,8 +1,9 @@
 static/uploads/full_videos/*.webm
-static/service-worker.js
-static/manifest.json
 static/images/preview.mp4
 static/uploads/hidden/*.webm
 static/uploads/images/*.png
 
 .env
+
+db/
+modules/
