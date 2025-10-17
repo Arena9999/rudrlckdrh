@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   let highlightStartTime = null;
 
   let forwardHeadStartTime = null;
-  const FORWARD_THRESHOLD = 25;    // CVA 임계값
+  const FORWARD_THRESHOLD = 20;    // CVA 임계값
   const HOLD_DURATION = 5;         // 5초 이상 지속해야 녹화 시작
   const HIGHLIGHT_POST_FRAMES = 300; // 10초 후 (30fps 기준)
 

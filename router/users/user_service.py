@@ -94,7 +94,7 @@ def get_user_checklist(user_id):
 @user_service_bp.route("/checklist", methods=["GET", "POST"])
 def checklist():
     if "user_id" not in session:
-        return redirect(url_for("checklist.guest_checklist"))
+        return redirect(url_for("user_service.guest_checklist"))
 
     user_id = session["user_id"]
 
@@ -103,7 +103,7 @@ def checklist():
         # 보안 필터링
         checked_factors = [f for f in checked_factors if f in FACTORS]
         save_checklist(user_id, checked_factors, FACTORS)
-        return redirect(url_for("checklist.checklist"))
+        return redirect(url_for("user_service.checklist"))
 
     saved_data = get_user_checklist(user_id)
     return render_template(
