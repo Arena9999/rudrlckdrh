@@ -65,6 +65,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   const status = "Normal";
 
+  const alertSound = new Audio('static/turtle.mp3');
+
   video.addEventListener('loadedmetadata', () => {
   canvas.width = video.videoWidth;
   canvas.height = video.videoHeight;
@@ -163,6 +165,14 @@ document.addEventListener("DOMContentLoaded", async () => {
       statusEl.innerText = `CVA: ${cva_avg.toFixed(1)}°, 상태: ${status}`;
       ctx.strokeStyle = cva_avg >= FORWARD_THRESHOLD ? "red" : "green";
 
+      // --- 화면 색 변화 ---
+      if (cva_avg >= FORWARD_THRESHOLD) {
+        document.body.style.backgroundColor = "#8ED1A0";
+
+        alertSound.play();
+      } else {
+        document.body.style.backgroundColor = "white";  // 정상일 때 배경을 흰색으로
+      }
 
       const points = [shoulder_r, ear_r, shoulder_l, ear_l];
       points.forEach((p) => {
@@ -213,6 +223,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
     } else {
       statusEl.innerText = "CVA: 0.0°, 상태: 인식x";
+      document.body.style.backgroundColor = "white";
       if (highlightRecording) stopHighlightRecording();
       forwardHeadStartTime = null;
     }
