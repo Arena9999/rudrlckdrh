@@ -44,7 +44,12 @@ def show_highlight_videos():
     if "user_id" not in session:
         return "로그인 필요", 403
 
-    user_id = session["user_id"]
+    user_id = str(session["user_id"])
+    
+    if user_id.startswith("guest"):
+        username = "게스트"
+        videos = []
+        return render_template("records/highlight.html", username=username, videos=videos)
 
     with get_connection() as conn:
         user = conn.execute("SELECT username FROM users WHERE id = ?", (user_id,)).fetchone()
@@ -55,5 +60,3 @@ def show_highlight_videos():
     videos = [{"path": url_for("static", filename=row["video_path"].replace("static/", "")), "timestamp": row["timestamp"]} for row in rows]
 
     return render_template("records/highlight.html", username=user["username"], videos=videos)
-
-

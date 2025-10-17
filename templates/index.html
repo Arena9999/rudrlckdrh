@@ -13,10 +13,20 @@
             </div>
 
             <div class="video-box">
-                <p>웹 동작 시연 영상</p>
+                <video
+                    autoplay
+                    loop
+                    muted
+                    playsinline
+                    style="width: 100%; height: auto; display: block; object-fit: cover;"
+                >
+                    <source src="{{ url_for('static', filename='images/preview.mp4') }}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
             </div>
         
-        {% elif session.get('user_id') == 'guest' %}    
+        {% set uid = session.get('user_id', '') %}
+        {% elif uid.startswith('guest') %}  
             <div class="welcome">
                 <h2>환영합니다, 게스트님</h2>
                 <p>로그인에 성공하셨습니다. 이제 서비스를 자유롭게 이용하세요.</p>

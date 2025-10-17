@@ -41,6 +41,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   const recordTimeEl = document.getElementById('recording-time');
   const recordBtn = document.getElementById("recordBtn");
 
+  canvas.width = 640;
+  canvas.height = 480;  
+
   let mediaRecorder = null;
   let recordedChunks = [];
   let recording = false;
@@ -61,6 +64,11 @@ document.addEventListener("DOMContentLoaded", async () => {
   let prevStatus = "Normal";
 
   const status = "Normal";
+
+  video.addEventListener('loadedmetadata', () => {
+  canvas.width = video.videoWidth;
+  canvas.height = video.videoHeight;
+});
 
   // =====================
   // 시간 포맷 함수
@@ -314,4 +322,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 function goToLink(element) {
     const url = element.getAttribute("data-href");
     window.location.href = url;
+  }
+
+// Service Worker 등록
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/static/service-worker.js')
+      .then(reg => console.log('Service Worker registered ✅', reg))
+      .catch(err => console.error('Service Worker registration failed ❌', err));
   }

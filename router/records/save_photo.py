@@ -52,7 +52,12 @@ def records_images():
     if "user_id" not in session:
         return redirect(url_for("index"))
 
-    user_id = session["user_id"]
+    user_id = str(session["user_id"])
+    
+    if user_id.startswith("guest"):
+        username = "게스트"
+        videos = [] 
+        return render_template("records/images.html", username=username, videos=videos)
 
     # DB에서 사용자 정보
     conn = get_connection()

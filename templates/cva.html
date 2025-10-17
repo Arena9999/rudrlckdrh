@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>CVA 측정</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
@@ -10,18 +10,19 @@
     <header>
         <nav class="navbar">
             <div class="logo">
-                {% if session.get('user_id') == 'guest' %}
-                <a href="{{ url_for('logout') }}">
-                    <img src="{{ url_for('static', filename='logo.png') }}" alt="logo" height="30">
-                </a>
+                {% set uid = session.get('user_id', '') | string %}
+                {% if uid.startswith('guest') %}
+                    <a href="{{ url_for('logout') }}">
+                        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="logo" height="30">
+                    </a>
                 {% else %}
-                <a href="{{ url_for('index') }}">
-                    <img src="{{ url_for('static', filename='logo.png') }}" alt="logo" height="30">
-                </a>
+                    <a href="{{ url_for('index') }}">
+                        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="logo" height="30">
+                    </a>
                 {% endif %}
             </div>
             <div class="menu">
-                {% if session.get('user_id') and session.get('user_id') != 'guest' %}
+                {% if uid and not uid.startswith('guest') %}
                     <a href="{{ url_for('logout') }}">로그아웃</a>
                     <a href="{{ url_for('records.records') }}">기록 보기</a>
                 {% else %}
@@ -35,24 +36,23 @@
 
     <main>
         <div class="cva-container">
-        
-        <!-- 카메라 화면 -->
-        <div class="camera-wrapper">
+            <!-- 카메라 화면 -->
+            <div class="camera-wrapper">
+                <video id="video" autoplay playsinline></video>
+                <canvas id="canvas"></canvas>
+                <div id="status">CVA: --, 상태: --</div>
+                <div id="controls"></div>
 
-          <video id="video" width="640" height="480" autoplay playsinline></video>
-          <canvas id="canvas" width="640" height="480"></canvas>
-          <div id="status">CVA: --, 상태: --</div>
-          <div id="controls"></div>
-          {% if session.get('user_id') and session.get('user_id') != 'guest' %}
-          <div class="lcapture">
-          <button id="captureBtn">사진 찍기</button>
-          <button id="recordBtn">영상 촬영</button>
-          <div id="recording-time" style="margin-top:10px; font-weight:bold; font-size:16px; color:red;"></div>
-          <span id="countdownDisplay" style="display:block; margin-top:10px; font-weight:bold; font-size:16px;"></span>
-          </div>
-          {% endif %}
+                {% if uid and not uid.startswith('guest') %}
+                    <div class="lcapture">
+                        <button id="captureBtn">사진 찍기</button>
+                        <button id="recordBtn">영상 촬영</button>
+                        <div id="recording-time" style="margin-top:10px; font-weight:bold; font-size:16px; color:red;"></div>
+                        <span id="countdownDisplay" style="display:block; margin-top:10px; font-weight:bold; font-size:16px;"></span>
+                    </div>
+                {% endif %}
+            </div>
         </div>
-    </div>
     </main>
 
     <footer>
@@ -65,10 +65,9 @@
         <p>© 2025 웹 서비스 플랫폼. All rights reserved.</p>
     </footer>
 
-
+    <!-- Mediapipe 및 스크립트 -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/pose@0.5/pose.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
-
-
-<script src="https://cdn.jsdelivr.net/npm/@mediapipe/pose@0.5/pose.js" ></script>
-<script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" ></script>
-<script src="{{ url_for('static', filename='script.js') }}"></script>
+</html>

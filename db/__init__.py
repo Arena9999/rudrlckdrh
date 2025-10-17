@@ -37,7 +37,7 @@ def init_db():
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             FOREIGN KEY (user_id) REFERENCES users (id)
         );
-
+        
         CREATE TABLE IF NOT EXISTS full_videos (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             user_id INTEGER NOT NULL,
@@ -67,6 +67,20 @@ def init_db():
             updated_at DATETIME,
             FOREIGN KEY (user_id) REFERENCES users (id)
         );
+        
+        CREATE TABLE IF NOT EXISTS guest_checklist (
+            guest_user_id INTEGER PRIMARY KEY AUTOINCREMENT,
+            guest_session_id TEXT UNIQUE,  -- 세션별 고유 ID
+            cold_tingling_posture INTEGER DEFAULT 0,
+            neck_cracking_fatigue_headaches INTEGER DEFAULT 0,
+            bad_sleeping_habit INTEGER DEFAULT 0,
+            computer_over_8h INTEGER DEFAULT 0,
+            neck_shoulder_stiffness INTEGER DEFAULT 0,
+            unrefreshing_sleep INTEGER DEFAULT 0,
+            eye_strain_headaches INTEGER DEFAULT 0,
+            updated_at DATETIME
+        );
+
     """)
 
     conn.commit()

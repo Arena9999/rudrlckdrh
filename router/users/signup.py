@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, url_for, flash, redirect, session
 from db import add_user
 from werkzeug.security import generate_password_hash
+from modules.utils import generate_hash
 
 signup_bp = Blueprint('signup', __name__)
 
@@ -35,6 +36,6 @@ def register():
 @signup_bp.route("/", methods=["POST"])
 def guest_login():
     # 세션에 guest 사용자 설정
-    session["user_id"] = "guest"
+    session["user_id"] = "guest" + generate_hash(32)
     session["username"] = "게스트"
     return redirect(url_for("index"))  # 게스트용 홈 페이지

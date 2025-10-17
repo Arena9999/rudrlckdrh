@@ -5,74 +5,27 @@
 {% block content %}
 <main>
   <section class="statistics" style="max-width: 600px; margin: 40px auto; font-family: Arial, sans-serif;">
-    <h1 style="color: #2563EB;">거북목 체크리스트 항목별 통계</h1>
+    <h1 style="color: #1e40af; font-weight: 700; font-size: 28px; margin-bottom: 10px;">거북목 체크리스트 항목별 통계</h1>
+    <p style="color: #374151; font-size: 16px; margin-bottom: 30px;">아래는 각 항목별로 체크한 사용자 비율입니다.</p>
+    </section>
 
-    <p>아래는 각 항목별로 체크한 사용자 비율입니다.</p>
-
-    <ul style="list-style: none; padding: 0; margin-top: 20px;">
-      <!-- 예시 항목들 -->
-      <li style="margin-bottom: 15px;">
-        <strong>손발이 차고 자주 저리고, 평소 구부정한 자세라는 말을 자주 듣는다.</strong>
-        <div style="background: #e5e7eb; border-radius: 6px; overflow: hidden; height: 20px; margin-top: 6px;">
-          <div style="width: 35%; background: #2563EB; height: 100%;"></div>
-        </div>
-        <small>35%</small>
-      </li>
-
-      <li style="margin-bottom: 15px;">
-        <strong>목을 이리저리 돌렸을 때 우두둑하는 소리가 나거나 쉽게 피곤하고 두통이 자주 생긴다.</strong>
-        <div style="background: #e5e7eb; border-radius: 6px; overflow: hidden; height: 20px; margin-top: 6px;">
-          <div style="width: 58%; background: #2563EB; height: 100%;"></div>
-        </div>
-        <small>58%</small>
-      </li>
-
-      <li style="margin-bottom: 15px;">
-        <strong>잠 버릇이 나쁘다</strong>
-        <div style="background: #e5e7eb; border-radius: 6px; overflow: hidden; height: 20px; margin-top: 6px;">
-          <div style="width: 53%; background: #2563EB; height: 100%;"></div>
-        </div>
-        <small>53%</small>
-      </li>
-
-      <li style="margin-bottom: 15px;">
-        <strong>컴퓨터를 하루에 8시간 이상 하는 편이다.</strong>
-        <div style="background: #e5e7eb; border-radius: 6px; overflow: hidden; height: 20px; margin-top: 6px;">
-          <div style="width: 42%; background: #2563EB; height: 100%;"></div>
-        </div>
-        <small>42%</small>
-      </li>
-
-      <li style="margin-bottom: 15px;">
-        <strong>목과 어깨가 자주 결린다.</strong>
-        <div style="background: #e5e7eb; border-radius: 6px; overflow: hidden; height: 20px; margin-top: 6px;">
-          <div style="width: 49%; background: #2563EB; height: 100%;"></div>
-        </div>
-        <small>49%</small>
-      </li>
-
-      <li style="margin-bottom: 15px;">
-        <strong>자고 일어났을 때 개운하지 않다.</strong>
-        <div style="background: #e5e7eb; border-radius: 6px; overflow: hidden; height: 20px; margin-top: 6px;">
-          <div style="width: 28%; background: #2563EB; height: 100%;"></div>
-        </div>
-        <small>28%</small>
-      </li>
-
-      <li style="margin-bottom: 15px;">
-        <strong>눈이 쉽게 뻐근하고 만성 두통에 시달린다.</strong>
-        <div style="background: #e5e7eb; border-radius: 6px; overflow: hidden; height: 20px; margin-top: 6px;">
-          <div style="width: 65%; background: #2563EB; height: 100%;"></div>
-        </div>
-        <small>65%</small>
-      </li>
-
+  <div class="statistics" style="max-width: 600px; margin: 40px auto; font-family: 'Noto Sans KR', Arial, sans-serif; background: #fff; padding: 30px 40px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" >
+    <ul style="list-style: none; padding: 0; margin: 0;">
+      {% for factor in FACTORS %}
+        <li style="margin-bottom: 22px;">
+          <strong style="display: block; color: #111827; font-size: 17px; margin-bottom: 8px;">{{ FACTOR_KR[factor] }}</strong>
+          <div style="background: #e5e7eb; border-radius: 12px; overflow: hidden; height: 24px; box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);">
+            <div style="width: {{ stats[factor] }}%; background: #2563EB; height: 100%; transition: width 0.4s ease;"></div>
+          </div>
+          <small style="display: inline-block; margin-top: 6px; color: #4b5563; font-weight: 600;">{{ stats[factor] }}%</small>
+        </li>
+      {% endfor %}
     </ul>
 
     <button type="button" onclick="history.back()" 
-            style="margin-top: 30px; padding: 12px 20px; font-size: 16px; background:#2563EB; color: white; border: none; border-radius: 6px; cursor: pointer;">
+            style="margin-top: 40px; padding: 14px 28px; font-size: 17px; background:#2563EB; color: white; border: none; border-radius: 12px; cursor: pointer; font-weight: 700; box-shadow: 0 4px 6px rgba(37,99,235,0.4);">
       이전으로
     </button>
-  </section>
+  </div>
 </main>
 {% endblock %}

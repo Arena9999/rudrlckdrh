@@ -51,11 +51,13 @@ body {
 
 /* 제목, 부제 */
 h1 {
-  font-size: 2rem;
   font-weight: bold;
   text-align: center;
-  color: #10b981; /* 사진 기록 초록 계열 */
-  margin-bottom: 0.3em;
+  color: #10b981;
+  font-size: clamp(1.2rem, 5vw, 2rem);
+  max-width: 100%;
+  padding: 0 10px;
+  word-break: keep-all;
 }
 
 p.subtitle {
@@ -95,9 +97,11 @@ p.subtitle {
 .t thead th {
   background-color: #10b981;
   color: white;
-  padding: 14px 10px;
+  padding: 10px 6px;
   text-align: center;
-  font-size: 1.1rem;
+  font-size: 1rem;
+  white-space: nowrap;
+  min-width: 80px;
 }
 
 /* 셀 */

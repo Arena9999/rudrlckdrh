@@ -70,9 +70,21 @@ def show_full_videos():
     if "user_id" not in session:
         return "로그인 필요", 403
 
-    user_id = session["user_id"]
+    user_id = str(session["user_id"])
+
+    # 게스트 처리
+    if user_id.startswith("guest"):
+        username = "게스트"
+        videos = []  # 게스트는 DB 조회 불가 → 비어있게
+        return render_template("records/full.html", username=username, videos=videos)
+
+    # 일반 유저
     conn = get_connection()
     user = conn.execute("SELECT username FROM users WHERE id = ?", (user_id,)).fetchone()
+    if not user:
+        conn.close()
+        return "사용자 정보 없음", 404
+
     videos = conn.execute(
         "SELECT * FROM full_videos WHERE user_id = ? ORDER BY timestamp DESC",
         (user_id,)

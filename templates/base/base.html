@@ -5,28 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}웹 서비스{% endblock %}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
 </head>
 <body>
     <header>
         <nav class="navbar">
             <div class="logo">
-                {% if session.get('user_id') == 'guest' %}
+                {% set uid = session.get('user_id', '') | string %}
+                {% if uid.startswith('guest') %}
                 <a href="{{ url_for('logout') }}">
-                    <img src="{{ url_for('static', filename='logo.png') }}" alt="logo" height="30">
+                    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="logo" height="30">
                 </a>
                 {% else %}
                 <a href="{{ url_for('index') }}">
-                    <img src="{{ url_for('static', filename='logo.png') }}" alt="logo" height="30">
+                    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="logo" height="30">
                 </a>
                 {% endif %}
             </div>
             <div class="menu">
-                {% if session.get('user_id') and session.get('user_id') != 'guest' %}
-                    <a href="{{ url_for('logout') }}">로그아웃</a>
-                    <a href="{{ url_for('records.records') }}">기록 보기</a>
-                {% else %}
+                {% set uid = session.get('user_id', '') | string %}
+                {% if uid.startswith('guest') or not uid %}
                     <a href="{{ url_for('signup.register') }}">회원가입</a>
                     <a href="{{ url_for('login.login') }}">로그인</a>
+                    
+                {% else %}
+                    <a href="{{ url_for('logout') }}">로그아웃</a>
+                    <a href="{{ url_for('records.records') }}">기록 보기</a>
                 {% endif %}
                 <a href="{{ url_for('user_service.user_service') }}">거북목 개선 방법</a>
             </div>
@@ -50,7 +54,8 @@
     <div id="flash-container"
          data-messages="{% for msg in get_flashed_messages() %}{{ msg|replace('"','&quot;') }}{% if not loop.last %}|{% endif %}{% endfor %}">
     </div>
-<script src="{{ url_for('static', filename='script.js') }}"></script>
+    
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 
 </body>
 </html>

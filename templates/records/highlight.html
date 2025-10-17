@@ -42,11 +42,13 @@ body {
 
 /* 제목 */
 h1 {
-  font-size: 2rem;
   font-weight: bold;
-  margin-bottom: 0.3em;
   text-align: center;
   color: #e67300;
+  font-size: clamp(1.2rem, 5vw, 2rem);
+  max-width: 100%;
+  padding: 0 10px;
+  word-break: keep-all;
 }
 
 /* 부제 */
@@ -87,9 +89,11 @@ p.subtitle {
 .t thead th {
   background-color: #ff9800;
   color: white;
-  padding: 14px 10px;
+  padding: 10px 6px;
   text-align: center;
-  font-size: 1.1rem;
+  font-size: 1rem;
+  white-space: nowrap;
+  min-width: 80px;
 }
 
 /* 셀 */
